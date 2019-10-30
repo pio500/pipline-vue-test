@@ -9,6 +9,7 @@ node {
     stage('Checkout') {
         // SourceCommit  리파지토리에서 소스 가져오기
         echo "123123333"
+		git "https://github.com/pio500/pipline-vue-test.git"
 		sh "npm install"
 		sh "ls"
     }
