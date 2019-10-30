@@ -9,7 +9,7 @@ node {
     stage('Checkout') {
         // SourceCommit  리파지토리에서 소스 가져오기
         echo "123123333"
-        npm install
+		sh "npm install"
     }
     stage('Test') {
         
