@@ -19,7 +19,7 @@ node {
         // **       in the global configuration.
         mvnHome = tool 'M3'
     }
-    stage('Checkout') {
+    stage('Che1231231232ckout') {
         // Get some code from a Git repository
         checkout scm
     }
