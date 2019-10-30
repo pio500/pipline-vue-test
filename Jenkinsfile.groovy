@@ -10,9 +10,12 @@ node {
         // SourceCommit  리파지토리에서 소스 가져오기
         echo "123123333"
 		sh "npm install"
+		sh "ls"
     }
     stage('Test') {
-        
+		echo "Test"
+        sh "ls"
+		echo "EndTest"
         println "skip Test"        
         //sh "'${mvnHome}/bin/mvn'  -Dmaven.test.failure.ignore -B verify"
             
