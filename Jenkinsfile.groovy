@@ -26,7 +26,7 @@ node {
         EXPOSE 80 \
         CMD [ 'npm', 'run', 'serve'] \
         EOF" 
-        
+        sh "cat Dockerfile"
     }
     stage('Deploy') {
         archive '**/target/*.war'
