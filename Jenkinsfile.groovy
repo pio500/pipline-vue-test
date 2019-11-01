@@ -1,35 +1,36 @@
 node {
-    stage('Preparation') { 
-        // for display purposes
-        echo "Current workspace : ${workspace}"
-        // Get the Maven tool.
-        // ** NOTE: This 'M3' Maven tool must be configured
-        // **       in the global configuration.
-    }
-    stage('Checkout') {
+    stage('GitPull') {
         // SourceCommit  리파지토리에서 소스 가져오기
         echo "123123333"
 		git "https://github.com/pio500/pipline-vue-test.git"
-		sh "npm install"
-		sh "ls"
     }
-    stage('Test') {
-		echo "Test"
+    stage('Test') { 
+        echo "Test : ${workspace}"
         sh "ls"
-		echo "EndTest"
-        println "skip Test"        
-        //sh "'${mvnHome}/bin/mvn'  -Dmaven.test.failure.ignore -B verify"
-            
     }
     stage('Build') {
-    
-    	// maven 빌드    	
-        sh "'${mvnHome}/bin/mvn'  -Dmaven.test.skip=true  clean install package"
+        sh "npm install"
+        sh "npm build"
+        sh "mkdir node_capsule"
+        sh "cd node_capsule"
+        git "https://github.com/beewee22/static-server-spa.git"
+        cp -r ../dist /dist
+        sh "cat << EOF >> Dockerfile \
+        FROM node:lts-alpine \
+        RUN npm install -g http-server \
+        WORKDIR /app \
+        COPY package*.json ./ \
+        RUN npm ci \
+        COPY . . \
+        RUN ls -al \
+        EXPOSE 80 \
+        CMD [ 'npm', 'run', 'serve'] \
+        EOF" 
+        
     }
-    stage('Archive') {
+    stage('Deploy') {
         archive '**/target/*.war'
-    }
-    
+    } 
     stage('Deploy') {        
         
         // "빌드 결과물을 objectstorage에 백업한다."
